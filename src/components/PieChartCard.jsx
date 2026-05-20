@@ -1,5 +1,8 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
-import { dadosPrioridade } from '../data/mockData'
+import { chamados } from '../data/mockData'
+import { getDadosPrioridade } from '../services/chamadosService'
+
+const dadosPrioridade = getDadosPrioridade(chamados)
 
 const font = "'Poppins', sans-serif"
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
-import { marcadoresMapa, ocorrenciasMapa } from '../data/mockData'
+import { marcadoresMapa, chamados } from '../data/mockData'
 
 const font = "'Poppins', sans-serif"
 
@@ -204,10 +204,10 @@ export default function MapCard() {
             </Marker>
           ))}
 
-          {ocorrenciasMapa.map((o, i) => (
+          {chamados.map((c) => (
             <Marker
-              key={`ocorrencia-${i}`}
-              position={[o.lat, o.lng]}
+              key={`chamado-${c.id}`}
+              position={[c.lat, c.lng]}
               icon={iconeOcorrencia}
             />
           ))}
