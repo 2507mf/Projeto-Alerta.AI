@@ -22,9 +22,10 @@ const chatItems = [
   { label: 'Comunicações', icon: MessageCircle           },
 ]
 
-const ITEM_H = 57
+const ITEM_H    = 57
+const HABILITADO = ['Dashboard', 'Chamados']
 
-export default function Sidebar({ active = 'Dashboard' }) {
+export default function Sidebar({ active = 'Dashboard', onNavigate }) {
   return (
     <aside
       style={{
@@ -47,58 +48,48 @@ export default function Sidebar({ active = 'Dashboard' }) {
       {/* Navegação principal */}
       <nav style={{ flex: 1, padding: '0 0' }}>
         {navItems.map(({ label, icon: Icon }) => {
-          const isActive = label === active
+          const isActive   = label === active
+          const isEnabled  = HABILITADO.includes(label)
+
           return (
             <div key={label} style={{ position: 'relative', height: ITEM_H }}>
               {/* Fundo gradiente do item ativo */}
               {isActive && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(90deg, #00936C 68%, rgba(0,147,108,0) 100%)',
-                    pointerEvents: 'none',
-                  }}
-                />
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(90deg, #00936C 68%, rgba(0,147,108,0) 100%)',
+                  pointerEvents: 'none',
+                }} />
               )}
 
-              {/* Barra branca lateral esquerda */}
+              {/* Barra lateral branca */}
               {isActive && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: 6,
-                    height: 50,
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: '0 3px 3px 0',
-                  }}
-                />
+                <div style={{
+                  position: 'absolute', left: 0,
+                  top: '50%', transform: 'translateY(-50%)',
+                  width: 6, height: 50,
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '0 3px 3px 0',
+                }} />
               )}
 
               <button
-                disabled={!isActive}
+                onClick={() => isEnabled && onNavigate && onNavigate(label)}
                 style={{
                   position: 'relative',
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  paddingLeft: 34,
-                  paddingRight: 16,
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: isActive ? 'pointer' : 'not-allowed',
-                  color: isActive ? '#FFFFFF' : 'rgba(204,204,204,0.4)',
+                  width: '100%', height: '100%',
+                  display: 'flex', alignItems: 'center',
+                  gap: 12, paddingLeft: 34, paddingRight: 16,
+                  background: 'transparent', border: 'none',
+                  cursor: isEnabled ? 'pointer' : 'not-allowed',
+                  color: isActive ? '#FFFFFF' : isEnabled ? 'rgba(204,204,204,0.7)' : 'rgba(204,204,204,0.4)',
                   fontFamily: "'Poppins', sans-serif",
                   fontSize: isActive ? 18 : 14,
                   fontWeight: isActive ? 600 : 500,
                   letterSpacing: '-0.2px',
                   textAlign: 'left',
-                  opacity: isActive ? 1 : 0.5,
+                  opacity: isEnabled ? 1 : 0.45,
+                  transition: 'opacity 0.15s',
                 }}
               >
                 <Icon
